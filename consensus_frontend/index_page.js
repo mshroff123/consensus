@@ -46,6 +46,19 @@ async function searchQuery() {
     intelligent_result = JSON.parse(intelligent_result)
     intelligent_result_inputs = intelligent_result.data
 
+    final_claims = []
+    for (var i in intelligent_result_inputs["llm_resp_array"]) {
+      result = intelligent_result_inputs["llm_resp_array"][i]
+      if (result == `\n`) {
+        print('bad result')
+      }
+      else {
+        final_claims.push(result.substring(3))
+      }
+    }
+
+    intelligent_result_inputs["llm_resp_array"] = final_claims
+
     console.log(intelligent_result_inputs)
 
     const additionalParamsLambda = {
@@ -55,6 +68,8 @@ async function searchQuery() {
     };
 
     const intelligent_claims = await apigClient_intelligent.searchPost(params, intelligent_result_inputs, additionalParamsLambda);
+
+
 
     console.log(intelligent_claims)
 
@@ -97,7 +112,7 @@ function populateRawResults(searchResults) {
 
   searchResults.posts.forEach(post => {
     post.comments.forEach(comment => {
-      // Add table row for each comment
+      // Add table row for each commentx
       html += `<div onclick="window.open('${post.post_url}','_blank')"" style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  padding: 20px; border: 1px solid black;"><img src="reddit-logo.png" style="height: 70px; width: 70px; margin-left: 60px"></img><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">${post.post_title}</div><div style="font-family: Open Sans; font-size: 16px; color: black; margin: 15px; width: 80%;">${comment.comment_body}</div></div></div>`;  });});
 
 
@@ -132,7 +147,7 @@ function renderIntelligentResults() {
     consensusDiv.style.display = "none"
   } else {
     resultsDiv.style.display = "none";
-    consensusDiv.style.display = "block"
+    consensusDiv.style.display = "flex"
     // load consensus results
   }
 }
@@ -140,8 +155,8 @@ function renderIntelligentResults() {
 function displayChildComment(id) {
   td3 = document.getElementById(`td3-${id}`)
   ul = document.getElementById(`child-comment-ul-${id}`)
-  ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
-  td3.style.display = td3.style.display === 'none' ? 'block' : 'none';
+  ul.style.display = ul.style.display === 'none' ? 'flex' : 'none';
+  td3.style.display = td3.style.display === 'none' ? 'flex' : 'none';
   td3.appendChild(ul);
 }
 
@@ -154,19 +169,21 @@ function populateIntelligentResultsExpand(results) {
 
   for (var i = 0; i < results.key_claims.length; i++)  {
     claim = results.key_claims[i]
-    html += `<div id="${i}" onclick="displayChildComment(this.id)" style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center; display: flex; flex-direction: column;  border: 1px solid black; padding: 20px">`
-    html += `<div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">${claim.claim}</div></div>`
-    html += `<div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">Relevance Score ${claim.relevance_score}</div></div>`
+    html += `<div id="${i}" onclick="displayChildComment(this.id)"  style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  padding: 20px; border: 1px solid black;"><div style="width: 70px; font-size: 24px; font-weight: bold; color: #03a9f4; margin-left: 30px;">${claim.relevance_score}%</div><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%; margin-left: -30px;">${claim.claim}</div>`;
+
+
     html_id = `td3-${i}`
-    html += `<div id=${html_id}  style="display: none">`
+    html += `<div id=${html_id}  style="display: none; flex-direction: column">`
     // const td3 = document.createElement('div');
     if (claim.supporting_comments.length > 0) {
       /// const ul = document.createElement('div');
       // ul.classList.add('comment-list');
-      html += `<div id="child-comment-ul-${i}" style="display: none">`
+      html += `<div id="child-comment-ul-${i}" style="display: none; flex-direction: column; align-items: center; justify-content:center; padding: 30px">`
       for (let comment of claim.supporting_comments) {
-          html += '<li>'
-          html += `${comment}</li>`
+          html += '<div style="width: 80%; background-color: #F2F2F2; margin-top: 20px; flex-direction: row; font-family: Open Sans; padding: 20px;border-radius: 30px;;  border: 1px solid black;"><img src="reddit-logo.png" style="height: 30px; width: 30px; margin-left: 30px; margin-bottom: 20px;"></img>'
+          html += `<div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 100%";>`
+          html += `${comment}</div>`
+          html += `</div>`
       }
 
       html += `</div>`
@@ -175,6 +192,8 @@ function populateIntelligentResultsExpand(results) {
       html += `</div>`
 
    }
+
+   html += `</div>`
 
     html += `</div>`
   }
