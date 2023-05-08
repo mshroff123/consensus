@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: Raw Result Search API
+  description: 'API to receive raw search results based on query.'
+  version: 1.0.0
+basePath: /api/v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /search:
+    get:
+      summary: Raw related comments using Reddit API
+      description: Returns raw Reddit comments with upvotes and links to their posts. 
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: the query string from API
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: raw search results
+          schema:
+            $ref: '#/definitions/RawResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  RawResponse:
+    type: object
+    properties:
+      posts:
+        type: array
+        items:
+          $ref: '#/definitions/Post'
+  Post:
+    type: object
+    properties:
+      post_title: 
+        type: string
+      post_score:
+        type: integer
+        format: int32
+      post_url:
+        type: string
+      comments:
+        type: array
+        items:
+            $ref: '#/definitions/Comment'
+  Comment:
+    type: object
+    properties:
+      comment_body:
+        type: string
+      comment_score:
+        type: integer
+        format: int32
+      comment_url:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

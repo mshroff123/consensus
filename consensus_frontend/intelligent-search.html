@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Intelligent Search</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="assets/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="assets/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="assets/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="assets/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="assets/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="assets/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="assets/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="assets/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="assets/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="assets/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="assets/apigClient.js"></script>
+</head>
+<body>
+    <button onclick="location.href='index.html'" class="btn btn-primary">Search Page</button>
+    <button onclick="location.href='search-history.html'" class="btn btn-primary">Search History</button>
+    <div class="container">
+        <div class="app">
+            <h2>Intelligent Search Results</h2>
+            <p></p>
+            <p></p>
+            <div id="summary"></div>
+            <h3>General Consensus and Relevance Scores</h3>
+            <div class="row">
+                <div class="column">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Key Claim</th>
+                                <th>Score</th>
+                                <th>Supporting Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody id="general-consensus">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="intelligent_page.js"></script>
+<script src="assets/apigClient.js"></script>
+</html>

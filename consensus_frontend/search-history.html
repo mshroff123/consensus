@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search History</title>
+  </head>
+  <body>
+    <button onclick="location.href='index.html'" class="btn btn-primary">Search Page</button>
+    <h1>Search History</h1>
+    <ul id="search-history-list">
+    </ul>
+
+    <script>
+        const searchHistoryList = document.getElementById("search-history-list");
+
+        // Retrieve the search history from localStorage
+        const searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+
+        // Loop through the search history and create a list item for each search query
+        searchHistory.forEach((query) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <div>
+                <span>${query.query}</span>
+                </div>
+                <div>
+                <span>Summary: ${query.summary}</span>
+                </div>
+            `;
+            searchHistoryList.appendChild(li);
+        });
+
+        // Retrieve the last search query from localStorage
+        const lastSearchQuery = localStorage.getItem("lastSearchQuery");
+        // Add the last search query to the top of the list
+        if (lastSearchQuery) {
+            const li = document.createElement("li");
+            li.textContent = lastSearchQuery;
+            searchHistoryList.insertBefore(li, searchHistoryList.firstChild);
+        }
+    </script>
+  </body>
+</html>
+

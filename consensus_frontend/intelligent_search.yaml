@@ -1,0 +1,68 @@
+swagger: '2.0'
+info:
+  title: Intelligent Search API
+  description: 'API to recieve intelligent search results based on query.'
+  version: 1.0.0
+basePath: /api/v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /search:
+    get:
+      summary: Search results consolidated across discussion-based apps
+      description: Returns an intelligent summary of relevant opinions, groups them by key claims and provides top comments supporting each claim. 
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: the query string from API
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: intelligent search results
+          schema:
+            $ref: '#/definitions/SearchResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  SearchResponse:
+    type: object
+    properties:
+      search_id:
+        type: string
+      summary:
+        type: string
+      key_claims:
+        type: array
+        items:
+          type: object
+          properties:
+            claim:
+              type: string
+            relevance_score:
+              type: integer
+              format: int32
+            supporting_comments:
+              type: array
+              items:
+                type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
