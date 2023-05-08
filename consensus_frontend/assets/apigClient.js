@@ -53,7 +53,7 @@ apigClientFactory.newClient = function (config) {
 
     
     // extract endpoint and path from url
-    var invokeUrl = 'https://w481us3wj1.execute-api.us-east-1.amazonaws.com/deploy-stage';
+    var invokeUrl = 'https://4rv4g830lk.execute-api.us-east-1.amazonaws.com/deploy-stage';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 
@@ -83,21 +83,57 @@ apigClientFactory.newClient = function (config) {
     
     
     
-    apigClient.searchGet = function (params, body, additionalParams) {
+    apigClient.getClaimsGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, ['q'], ['body']);
         
-        var searchGetRequest = {
+        var getClaimsGetRequest = {
             verb: 'get'.toUpperCase(),
-            path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            path: pathComponent + uritemplate('/get-claims').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, ['q']),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(searchGetRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(getClaimsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.getClaimsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var getClaimsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/get-claims').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(getClaimsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.searchPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var searchPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(searchPostRequest, authType, additionalParams, config.apiKey);
     };
     
     

@@ -40,11 +40,32 @@ async function searchQuery() {
     consensusDiv.innerHTML = html;
 
 
-    const intelligent = await apigClient_intelligent.searchGet(params, body, additionalParams);
+
+    const intelligent = await apigClient_intelligent.getClaimsGet(params, body, additionalParams);
     intelligent_result = JSON.stringify(intelligent);
     intelligent_result = JSON.parse(intelligent_result)
-    populateIntelligentResultsExpand(intelligent_result.data)
-    console.log(intelligent_result)
+    intelligent_result_inputs = intelligent_result.data
+
+    console.log(intelligent_result_inputs)
+
+    const additionalParamsLambda = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const intelligent_claims = await apigClient_intelligent.searchPost(params, intelligent_result_inputs, additionalParamsLambda);
+
+    console.log(intelligent_claims)
+
+
+    const intelligent_claims_result = JSON.stringify(intelligent_claims);
+    const intelligent_claims_result_final  = JSON.parse(intelligent_claims_result)
+    
+
+
+    populateIntelligentResultsExpand(intelligent_claims_result_final.data)
+    console.log(intelligent_claims_result_final.data)
     
   } catch (err) {
     console.log("error", err);
@@ -77,8 +98,7 @@ function populateRawResults(searchResults) {
   searchResults.posts.forEach(post => {
     post.comments.forEach(comment => {
       // Add table row for each comment
-      html += `<div onclick="window.open(${post.post_url},'_blank')" style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  border: 1px solid black; padding: 20px"><img src="reddit-logo.png" style="height: 70px; width: 70px; margin-left: 60px"></img><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">${post.post_title}</div><div style="font-family: Open Sans; font-size: 16px; color: black; margin: 15px; width: 80%;">${comment.comment_body}</div></div></div>`;
-    });
+      html += `<div onclick="window.open('${post.post_url}','_blank')"" style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  border: 1px solid black; padding: 20px"><img src="reddit-logo.png" style="height: 70px; width: 70px; margin-left: 60px"></img><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">${post.post_title}</div><div style="font-family: Open Sans; font-size: 16px; color: black; margin: 15px; width: 80%;">${comment.comment_body}</div></div></div>`;  });
   });
 
 

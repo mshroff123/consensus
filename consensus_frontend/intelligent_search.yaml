@@ -12,12 +12,12 @@ produces:
   - application/json
 paths:
   /search:
-    get:
+    post:
       summary: Search results consolidated across discussion-based apps
       description: Returns an intelligent summary of relevant opinions, groups them by key claims and provides top comments supporting each claim. 
       parameters:
         - in: body
-          name: body
+          name: search-body
           schema:
             type: object
             properties:
