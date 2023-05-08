@@ -7,6 +7,15 @@ p {
     color: #444;
 }
 
+table {
+    table-layout: fixed;
+}
+  
+td {
+    word-wrap: break-word;
+}
+
+
 ul.comment-list {
     list-style-type: disc;
     margin-left: 1em;

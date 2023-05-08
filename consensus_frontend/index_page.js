@@ -55,7 +55,7 @@ function populateRawResults(searchResults) {
   searchResults.posts.forEach(post => {
     post.comments.forEach(comment => {
       // Add table row for each comment
-      html += `<tr><td>${post.post_title}</td><td>${post.post_score}</td><td>${post.post_url}</td><td>${comment.comment_body}</td><td>${comment.comment_score}</td><td>${comment.comment_url}</td></tr>`;
+      html += `<tr><td style="word-wrap: break-word;">${post.post_title}</td><td>${post.post_score}</td><td style="word-wrap: break-word;">${post.post_url}</td><td style="word-wrap: break-word;">${comment.comment_body}</td><td>${comment.comment_score}</td><td style="word-wrap: break-word;">${comment.comment_url}</td></tr>`;
     });
   });
 
