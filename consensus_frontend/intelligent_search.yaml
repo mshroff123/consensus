@@ -16,11 +16,16 @@ paths:
       summary: Search results consolidated across discussion-based apps
       description: Returns an intelligent summary of relevant opinions, groups them by key claims and provides top comments supporting each claim. 
       parameters:
-        - in: query
-          name: q
+        - in: body
+          name: body
           schema:
-            type: string
-          description: the query string from API
+            type: object
+            properties:
+              comments:
+                type: array
+              llm_resp_array:
+                type: array
+          description: The LLM response to respond to
       produces:
         - application/json
       responses:
@@ -36,7 +41,39 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /get-claims:
+    get:
+      summary: Get all the intelligent claims
+      description: Returns an intelligent summary of relevant opinions, groups them by key claims and provides top comments supporting each claim. 
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: the query string from APIs
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: intelligent search results
+          schema:
+            $ref: '#/definitions/LLMresponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
+  LLMresponse:
+    type: object
+    properties:
+      comments:
+        type: array
+      llm_resp_array:
+        type: array
   SearchResponse:
     type: object
     properties:

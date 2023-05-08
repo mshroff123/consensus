@@ -123,3 +123,76 @@ button:focus {
 @media (max-width: 1200px) {
     #bsaHolder{ display:none;}
 }
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 26px;
+    margin-left: 10px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #03a9f4;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #03a9f4;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(33px);
+    -ms-transform: translateX(33px);
+    transform: translateX(33px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .loader {
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
