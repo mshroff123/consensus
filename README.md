@@ -9,3 +9,11 @@ Consensus Search is a powerful search engine that leverages the wisdom of crowds
 - **Opinion and Consensus Metrics**: Displays prevailing consensus using proprietary relevance percentages and groups opinions based on similar concepts.
 - **Wide Range of Topics**: Covers a diverse array of topics such as medical, travel, general knowledge, tech, and reviews.
 
+
+## Acknowledgements
+
+- [OpenAI](https://www.openai.com/) for their GPT-3 API
+- [PRAW (Python Reddit API Wrapper)](https://praw.readthedocs.io/)
+- [Flask](https://flask.palletsprojects.com/) for the lightweight web framework
+- All contributors and users of Consensus Search, helping us build a better search experience for everyone
+
