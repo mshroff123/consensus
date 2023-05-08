@@ -169,7 +169,7 @@ function populateIntelligentResultsExpand(results) {
 
   for (var i = 0; i < results.key_claims.length; i++)  {
     claim = results.key_claims[i]
-    html += `<div id="${i}" onclick="displayChildComment(this.id)"  style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  padding: 20px; border: 1px solid black;"><div style="width: 70px; font-size: 24px; font-weight: bold; color: #03a9f4; margin-left: 30px;">${claim.relevance_score}%</div><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%; margin-left: -30px;">${claim.claim}</div>`;
+    html += `<div id="${i}" onclick="displayChildComment(this.id)"  style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  padding: 20px; border: 1px solid black;"><div style="width: 70px; font-size: 24px; font-weight: bold; color: #03a9f4; padding: 20px;">${claim.relevance_score}%</div><div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%; margin-left: -30px;">${claim.claim}</div>`;
 
 
     html_id = `td3-${i}`

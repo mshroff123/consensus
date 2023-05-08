@@ -1,0 +1,9 @@
+transformers[torch]==4.1.1
+sentence-transformers
+openai
+langchain
+pandas
+numpy
+pinecone-client
+tiktoken
+tqdm
