@@ -1,0 +1,96 @@
+---
+swagger: "2.0"
+info:
+  description: "API to receive raw search results based on query."
+  version: "1.0.0"
+  title: "Raw Result Search API"
+host: "fp3mdblt1d.execute-api.us-east-1.amazonaws.com"
+basePath: "/test-stage"
+schemes:
+- "https"
+paths:
+  /search:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "q"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/RawResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/Error"
+        "403":
+          description: "403 response"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - api_key: []
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"
+definitions:
+  Comment:
+    type: "object"
+    properties:
+      comment_body:
+        type: "string"
+      comment_score:
+        type: "integer"
+        format: "int32"
+      comment_url:
+        type: "string"
+  Post:
+    type: "object"
+    properties:
+      post_title:
+        type: "string"
+      post_score:
+        type: "integer"
+        format: "int32"
+      post_url:
+        type: "string"
+      comments:
+        type: "array"
+        items:
+          $ref: "#/definitions/Comment"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+  RawResponse:
+    type: "object"
+    properties:
+      posts:
+        type: "array"
+        items:
+          $ref: "#/definitions/Post"

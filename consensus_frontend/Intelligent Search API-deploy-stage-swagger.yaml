@@ -1,0 +1,93 @@
+---
+swagger: "2.0"
+info:
+  description: "API to recieve intelligent search results based on query."
+  version: "1.0.0"
+  title: "Intelligent Search API"
+host: "4rv4g830lk.execute-api.us-east-1.amazonaws.com"
+basePath: "/deploy-stage"
+schemes:
+- "https"
+paths:
+  /get-claims:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "q"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/LLMresponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/Error"
+        "403":
+          description: "403 response"
+          schema:
+            $ref: "#/definitions/Error"
+      security:
+      - api_key: []
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /search:
+    post:
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"
+definitions:
+  LLMresponse:
+    type: "object"
+    properties:
+      comments:
+        type: "array"
+      llm_resp_array:
+        type: "array"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
