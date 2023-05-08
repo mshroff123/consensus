@@ -137,18 +137,12 @@ function renderIntelligentResults() {
   }
 }
 
-function displayChildComment(i) {
-  td3 = document.getElementById(`td3-${i}`)
-  ul = document.getElementById('child-comment-ul')
-  expandButton = document.getElementById('expand-button')
-  expandButton.textContent = 'See All Comments';
-  expandButton.addEventListener('click', function() {
-      ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
-      expandButton.textContent = ul.style.display === 'none' ? 'See All Comments' : 'Hide All Comments';
-  });
-  td3.appendChild(expandButton);
+function displayChildComment(id) {
+  td3 = document.getElementById(`td3-${id}`)
+  ul = document.getElementById(`child-comment-ul-${id}`)
+  ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
+  td3.style.display = td3.style.display === 'none' ? 'block' : 'none';
   td3.appendChild(ul);
-  ul.style.display = 'none';
 }
 
 function populateIntelligentResultsExpand(results) {
@@ -156,20 +150,20 @@ function populateIntelligentResultsExpand(results) {
 
 
   const consensusDiv = document.getElementById('consensus-search-results')
-  html = `<div style="font-family: Open Sans; font-size: 22px;">Consensus Results: Based on ${results.search_id} comments</div>`
+  html = `<div style="font-family: Open Sans; font-size: 22px;display: flex; flex-direction: columns; align-items: center; justify-content:center; ">Consensus Results: Based on ${results.search_id} comments</div>`
 
   for (var i = 0; i < results.key_claims.length; i++)  {
     claim = results.key_claims[i]
-    html += `<div style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center;  border: 1px solid black; padding: 20px">`
+    html += `<div id="${i}" onclick="displayChildComment(this.id)" style=" background-color: white; border-radius: 30px; display:flex; width: 90%; margin-top: 30px; border:none; box-shadow: none; flex-direction:row; align-items: center; justify-content:center; display: flex; flex-direction: column;  border: 1px solid black; padding: 20px">`
     html += `<div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">${claim.claim}</div></div>`
-   
+    html += `<div style="display: flex; flex-direction: column;  align-items: center; justify-content:center;align-self: center; justify-self: center; width: 90%";><div style="font-family: Open Sans; font-size: 18px; font-weight: bold;  color: black; margin: 15px;  width: 80%;">Relevance Score ${claim.relevance_score}</div></div>`
     html_id = `td3-${i}`
-    html += `<div id=${html_id}>`
+    html += `<div id=${html_id}  style="display: none">`
     // const td3 = document.createElement('div');
     if (claim.supporting_comments.length > 0) {
       /// const ul = document.createElement('div');
       // ul.classList.add('comment-list');
-      html += `<div id="child-comment-ul" style="display: none">`
+      html += `<div id="child-comment-ul-${i}" style="display: none">`
       for (let comment of claim.supporting_comments) {
           html += '<li>'
           html += `${comment}</li>`
@@ -177,7 +171,6 @@ function populateIntelligentResultsExpand(results) {
 
       html += `</div>`
 
-      html += `<button id="expand-button" onclick="displayChildComment(${i})">See All Comments</button>`
 
       html += `</div>`
 
