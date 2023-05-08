@@ -1,31 +1,45 @@
-# this function is used to build the raw results using a reddit scrape
-
 import json
 import praw
 
+def formatted_query_comments(query):
+    reddit = praw.Reddit(client_id='2z1kCNZ87wgQbs8k0fr5ew', client_secret='4V-jniLxhQvjiYZC3FgCYjEy5B27zA', user_agent='Consearch by maansishroff@gmail.com')
+
+    # build reddit_results to be correctly formatted for API Gateway
+    reddit_results = {"posts": []}
+    
+    # Search for posts related to the keyword
+    posts = reddit.subreddit('all').search(query, limit=10, sort='relevance')
+    
+    # Loop over the posts that match the search query
+    for post in posts:
+        post_comments = {"comments": []}
+        # search for comments related to the post
+        post.comments.replace_more(limit=10)
+        comments = post.comments.list()
+        top_comments = sorted(comments, key=lambda c: c.score, reverse=True)[:5]
+        
+        # loop over the comments and add to the post_comments dictionary
+        for comment in top_comments:
+            if "thanks" not in comment.body.lower() or "thank you" not in comment.body.lower():
+                post_comments["comments"].append({
+                    "comment_body": comment.body, 
+                    "comment_score": comment.score, 
+                    "comment_url": post.url+comment.permalink})
+        
+        # add the post to reddit_results
+        reddit_results["posts"].append({
+            "post_title": post.title, 
+            "post_score": post.score, 
+            "post_url": post.url, 
+            "comments": post_comments["comments"]})
+    
+    return reddit_results
+
+
 def lambda_handler(event, context):
 
-    reddit = praw.Reddit(client_id='2z1kCNZ87wgQbs8k0fr5ew', client_secret='4V-jniLxhQvjiYZC3FgCYjEy5B27zA')
-
-    subreddit = reddit.subreddit('AskReddit')
-    top_posts = subreddit.top(limit=10)
-
-    for post in top_posts:
-        print(post.title)
-    
-    
-    reddit_results = {
-        "comments":
-            [
-                {"comment_body": "Magnesium helps me with tension headaches and anxiety, lemon balm for anxiety, melatonin for sleep if i cant fall asleep on my own, probiotics to help keep me regular and maca helps to get me in the mood better since i also take sertaline which kills my libido", 
-                "upvotes": 3, 
-                "url": "https://www.reddit.com/r/Supplements/comments/12f13il/comment/jiuvzvs/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button"},
-                {"comment_body": "Creatine or betaine anhydrous for strength. Peak 02 performance, very good nitric oxide that actually fuckin works. L carnatine and CLA (which takes up to 4-6 months to see results, for me atleast. Hydroxycut w/ no caffine on a diet honestly did me good, but it was hard on the body. Pro biotics. Fish oil. Castor oil for the skin (very noticeable if you want to glow. Night shred by alpha lion actually has been working believe it or not. Vitamin D , zinc.", 
-                "upvotes": 10, 
-                "url": "https://www.reddit.com/r/Supplements/comments/12f13il/comment/jfig5bm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button"}
-            ]
-    }
-    
+    query = event["queryStringParameters"]["q"]
+    reddit_results = formatted_query_comments(query)
     
     return {
         "statusCode": 200,
