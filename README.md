@@ -1,6 +1,6 @@
 # Consensus Search
 
-Note: this is a depracated version of the platform. For the most up-to-date version, visit lynksearch.com
+Note: Consensus is the precursor for Lynk. this is a depracated version of the platform. For the most up-to-date version, visit lynksearch.com
 
 Consensus Search is a powerful search engine that leverages the wisdom of crowds to provide human, unbiased, and comprehensive answers to open-ended questions. By consolidating results from various discussion-based platforms such as Reddit, Quora, Stack Overflow, and Twitter, Consensus Search ensures users receive genuine insights from real users, instead of biased or sponsored content.
 
@@ -20,7 +20,7 @@ Consensus Search is a powerful search engine that leverages the wisdom of crowds
 - **raw-search**: Ingests data from Reddit PRAW API 
 
 ## Key Files:
-- **Dockerfile**: Instructions to build a Docker container for the Lynk application.
+- **Dockerfile**: Instructions to build a Docker container for the Consensus application.
 - **app.py**: Main application file.
 - **app_enhanced_summary.py**: Variant of the main app focusing on enhanced summary generation.
 - **prev_version.py**: Legacy version of primary functionality.
