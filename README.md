@@ -1,8 +1,8 @@
 # Consensus Search
 
-Consensus Search is a powerful search engine that leverages the wisdom of crowds to provide human, unbiased, and comprehensive answers to open-ended questions. By consolidating results from various discussion-based platforms such as Reddit, Quora, Stack Overflow, and Twitter, Consensus Search ensures users receive genuine insights from real users, instead of biased or sponsored content.
+Note: this is a depracated version of the platform. For the most up-to-date version, visit lynksearch.com
 
-http://intelligent-search-frontend.s3-website-us-east-1.amazonaws.com 
+Consensus Search is a powerful search engine that leverages the wisdom of crowds to provide human, unbiased, and comprehensive answers to open-ended questions. By consolidating results from various discussion-based platforms such as Reddit, Quora, Stack Overflow, and Twitter, Consensus Search ensures users receive genuine insights from real users, instead of biased or sponsored content.
 
 ## Features
 
@@ -16,7 +16,7 @@ http://intelligent-search-frontend.s3-website-us-east-1.amazonaws.com
 ## Directories:
 - **consensus-gpt**: Tools and scripts that utilize GPT for deriving a consensus from various inputs.
 - **enhanced-summary**: Components that aim to produce or enhance summaries from data or articles.
-- **gpt-search**: Implements GPT-based search functionalities.
+- **gpt-search**: Implements Vector search functionalities.
 - **gpt-summary**: Modules that leverage the GPT model to create or extract summaries.
 - **gpt**: General utilities and scripts related to GPT.
 - **raw-search**: Codebase for conducting unprocessed or 'raw' searches.
