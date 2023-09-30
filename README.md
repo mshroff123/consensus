@@ -14,22 +14,19 @@ Consensus Search is a powerful search engine that leverages the wisdom of crowds
 # Repository Contents
 
 ## Directories:
-- **consensus-gpt**: Tools and scripts that utilize GPT for deriving a consensus from various inputs.
-- **enhanced-summary**: Components that aim to produce or enhance summaries from data or articles.
-- **gpt-search**: Implements Vector search functionalities.
-- **gpt-summary**: Modules that leverage the GPT model to create or extract summaries.
-- **gpt**: General utilities and scripts related to GPT.
-- **raw-search**: Codebase for conducting unprocessed or 'raw' searches.
-- **regular**: Standard implementations, potentially baseline features without enhancements.
+- **enhanced-summary**: Adds functionality for enhanced summary with larger context sizes and more verbose responses
+- **gpt-search**: Implements Vector search functionality. Generates Key claims. 
+- **gpt-summary**: Generates Intelligent Summary based on Discussion Data. 
+- **raw-search**: Ingests data from Reddit PRAW API 
 
 ## Key Files:
 - **Dockerfile**: Instructions to build a Docker container for the Lynk application.
-- **app.py**: Main application file, possibly the API or primary service entry point.
+- **app.py**: Main application file.
 - **app_enhanced_summary.py**: Variant of the main app focusing on enhanced summary generation.
 - **prev_version.py**: Legacy version of primary functionality.
 - **raw_search_lambda.py**: Lambda function dedicated to raw search operations.
 - **raw_search_lambda_pushshift.py**: Raw search lambda function, with integration for pushshift (Reddit data platform).
-- **requirements.txt**: Lists the Python dependencies required for the project.
+- **requirements.txt**: Lists the Python dependencies required.
 
 
 
